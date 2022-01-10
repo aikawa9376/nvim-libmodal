@@ -41,6 +41,15 @@ end
 
 local _metaLayer = require('libmodal/src/classes').new(Layer.TYPE)
 
+--------------------------
+--[[ SUMMARY:
+	* is the layer active
+]]
+--------------------------
+function _metaLayer:isActive()
+  return self._priorKeymap
+end
+
 ---------------------------
 --[[ SUMMARY:
 	* Enter the `Layer`.
@@ -79,6 +88,7 @@ function _metaLayer:enter()
 		for lhs, newMapping in pairs(newMappings) do
 			local rhs, options = unpack(deconvertKeymap(newMapping))
 			api.nvim_buf_set_keymap(_BUFFER_CURRENT, mode, lhs, rhs, options)
+			newMapping['rhs'] = rhs
 		end
 	end
 
